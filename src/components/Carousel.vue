@@ -1,22 +1,31 @@
 <template>
   <div class="carousel-container">
-    <div class="item">
-      <a href="#"><img src="../assets/img/photos-2.jpg" alt=""></a>
+    <div class="item" v-for="(item) in data">
+      <a :href="item.href"><img :src="item.img" alt=""></a>
     </div>
     <div class="arrows-wrapper">
-      <button class="prev"><slot name="prev-btn"></slot></button>
+      <button class="prev" @click="AddCount"><slot name="prev-btn"></slot></button>
       <button class="next"><slot name="next-btn"></slot></button>
     </div>
   </div>
 
 </template>
 <script>
+import { onMounted,reactive,toRefs } from 'vue';
 export default {
+  props: {
+    'data':{
+      type: Array
+    }
+  },
   setup() {
-    const cc = function() {
+    const state= reactive({
+    })
+
+    const AddCount = ()=> {
       console.log('yes');
     }
-    return{ cc }
+    return{ AddCount}
   }
 }
 </script>
