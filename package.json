@@ -1,0 +1,21 @@
+{
+  "name": "carousel",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "reset-css": "^5.0.1",
+    "vue": "^3.2.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.6.0",
+    "@vue/compiler-sfc": "^3.2.6",
+    "sass": "^1.41.1",
+    "vite": "^2.5.2",
+    "vite-plugin-windicss": "^1.4.3",
+    "windicss": "^3.1.7"
+  }
+}
