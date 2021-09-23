@@ -139,8 +139,27 @@ export default {
       width: 35px;
       height: 4px;
       background-color: rgba(255,255,255,.5);
+      position: relative;
       &.active{
         background-color: #ffffff;
+      }
+      &::after{
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        content: '';
+        display: inline-block;
+        height: 10px;
+        width: 100%;
+      }
+      &::before{
+        position: absolute;
+        top: -10px;
+        left: 0;
+        content: '';
+        display: inline-block;
+        height: 10px;
+        width: 100%;
       }
     }
   }
