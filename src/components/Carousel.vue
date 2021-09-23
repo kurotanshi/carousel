@@ -24,7 +24,7 @@
       <button
         v-for="num in len"
         :class="{'active': show === num }"
-        @click="show = num"
+        @click="dotsCarousel(num)"
       ></button>
     </div>
   </div>
@@ -66,6 +66,15 @@ export default {
       state.carouselAn = 'next-move';
       state.show < state.len ? state.show++ : state.show = 1;
     }
+    const dotsCarousel = (num)=>{
+      if(num > state.show){
+        state.carouselAn = 'next-move';
+        state.show = num;
+      }else{
+        state.carouselAn = 'prev-move';
+        state.show = num;
+      }
+    }
     const autoPlay = ()=>{
       setInterval(() => {
         if(state.toggleTime){ toNext();}
@@ -75,7 +84,7 @@ export default {
       state.len = props.data.length;
       if(props.autoPlay){ autoPlay();}
     })
-    return{ toPrev,toNext,...toRefs(state)}
+    return{ toPrev,toNext,dotsCarousel,...toRefs(state)}
   }
 }
 </script>
