@@ -1,23 +1,26 @@
 <template>
   <div class="carousel-container"
-    @mousemove="toggleAn = false"
-    @mouseout="toggleAn = true"
+    @mousemove="toggleTime = false"
+    @mouseout="toggleTime = true"
   >
     <div class="content"
       v-for="(item) in data"
       :key="item.id"
     >
       <keep-alive>
-        <template v-if="item.id === ('photos-' + show)">
-          <a :href="item.href" ><img :src="item.img" alt=""></a>
-        </template>
+        <transition-group :name="carouselAn">
+          <template v-if="item.id === ('photos-' + show)">
+            <a :href="item.href" ><img :src="item.img" alt="">{{carouselAn}}</a>
+          </template>
+        </transition-group>
       </keep-alive>
     </div>
-    <div class="arrows-wrapper">
+
+    <div class="arrows-wrapper" v-show="arrows">
       <button class="prev" @click="toPrev"><slot name="prev-btn"></slot></button>
       <button class="next" @click="toNext"><slot name="next-btn"></slot></button>
     </div>
-    <div class="dots-wrapper">
+    <div class="dots-wrapper" v-show="dots">
       <button
         v-for="num in len"
         :class="{'active': show === num }"
@@ -25,27 +28,52 @@
       ></button>
     </div>
   </div>
-
 </template>
 <script>
 import { onMounted,reactive,toRefs } from 'vue';
 export default {
   props: {
-    'data':{ type: Array }
+    'data':{ type: Array },
+    'autoPlay':{
+      type: Boolean,
+      default: false,
+    },
+    'delayTime':{
+      type: Number,
+      default: 3000,
+    },
+    'arrows':{
+      type: Boolean,
+      default: false,
+    },
+    'dots':{
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const state= reactive({
       show: 1,
       len: 0,
-      toggleAn: true,
+      toggleTime: true,
+      carouselAn: 'next-move',
     })
-    const toPrev = ()=> { state.show > 1 ? state.show-- : state.show = state.len }
-    const toNext = ()=> { state.show < state.len ? state.show++ : state.show = 1 }
+    const toPrev = ()=> {
+      state.carouselAn = 'prev-move';
+      state.show > 1 ? state.show-- : state.show = state.len;
+    }
+    const toNext = ()=> {
+      state.carouselAn = 'next-move';
+      state.show < state.len ? state.show++ : state.show = 1;
+    }
+    const autoPlay = ()=>{
+      setInterval(() => {
+        if(state.toggleTime){ toNext();}
+      }, props.delayTime);
+    }
     onMounted(()=>{
       state.len = props.data.length;
-      setInterval(() => {
-        if(state.toggleAn){ toNext();}
-      }, 5000);
+      if(props.autoPlay){ autoPlay();}
     })
     return{ toPrev,toNext,...toRefs(state)}
   }
@@ -57,6 +85,7 @@ export default {
     height: 600px;
     margin: 0 auto;
     position: relative;
+    overflow-x: hidden;
   }
   .content{
     width: 100%;
@@ -105,6 +134,17 @@ export default {
         background-color: #ffffff;
       }
     }
+  }
+  // an
+  .next-move-enter-active,.next-move-leave-active,
+  .prev-move-enter-active,.prev-move-leave-active{
+    transition: all 1s linear;
+  }
+  .next-move-enter-from,.prev-move-leave-to{
+    transform: translateX(100%);
+  }
+  .prev-move-enter-from,.next-move-leave-to{
+    transform: translateX(-100%);
   }
 
 </style>
