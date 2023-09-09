@@ -9,16 +9,16 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
-    "@fortawesome/vue-fontawesome": "^3.0.0-4",
-    "reset-css": "^5.0.1",
-    "vue": "^3.2.6"
+    "@fortawesome/vue-fontawesome": "^3.0.3",
+    "reset-css": "^5.0.2",
+    "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.6.0",
-    "@vue/compiler-sfc": "^3.2.6",
-    "sass": "^1.41.1",
-    "vite": "^2.5.2",
-    "vite-plugin-windicss": "^1.4.3",
-    "windicss": "^3.1.7"
+    "@vitejs/plugin-vue": "^4.3.4",
+    "@vue/compiler-sfc": "^3.3.4",
+    "sass": "^1.66.1",
+    "vite": "^4.4.9",
+    "vite-plugin-windicss": "^1.9.1",
+    "windicss": "^3.5.6"
   }
 }
